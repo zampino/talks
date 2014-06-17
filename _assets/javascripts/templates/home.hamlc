@@ -1,0 +1,4 @@
+%p pick a topic
+%select{ng_model:"talk", ng_options: "t as t.name for t in talks"}
+%button{ng_click: "start()"} GO
+#description{ng_bind: "talk.description"}

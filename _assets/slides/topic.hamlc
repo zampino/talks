@@ -1,0 +1,7 @@
+%slides{type: 'plain'}
+  %slide{title: 'foo'}
+    %p some nice text here
+  %slide{title: 'foo'}
+    %p and some nice text here
+  %slide{title: 'foo'}
+    %p and and some nice text here

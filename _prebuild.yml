@@ -1,0 +1,12 @@
+---
+plugins:
+  - _prebuild
+sprockets_enabled: true
+assets:
+  dirname: "../assets"
+  cachebust: none
+  sources:
+    - _assets/javascripts
+    - _assets/stylesheets
+gems:
+  - jekyll-assets

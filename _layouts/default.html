@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html ng-app="Talks"
+      ng-keydown="keyPressed($event)"
+      ng-controller="ApplicationController">
+  {% include head.html %}
+  <body>
+    <!-- {% include header.html %} -->
+    <slideframe ng-view></slideframe>
+    {% include footer.html %}
+  </body>
+</html>
