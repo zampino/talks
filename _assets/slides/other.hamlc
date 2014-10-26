@@ -1,5 +1,4 @@
-%slides
-  %slide{title: 'one'}
-    one
-  %slide{title: 'two'}
-    two
+%slide{title: 'one'}
+  one
+%slide{title: 'two'}
+  two

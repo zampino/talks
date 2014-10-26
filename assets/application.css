@@ -1,0 +1,43 @@
+#main {
+  height: 85%;
+  border: 1px solid green; }
+
+footer {
+  height: 15%;
+  border: 1px solid red;
+  padding: 0 !important; }
+  footer .footer-col {
+    margin-left: 1em;
+    margin-top: .5em;
+    margin-right: 2em; }
+.multifade.animate-show, .multifade.animate-hide {
+  -webkit-transition: all linear 1s;
+  -moz-transition: all linear 1s;
+  -ms-transition: all linear 1s;
+  -o-transition: all linear 1s;
+  transition: all linear 1s; }
+.multifade.animate-show {
+  opacity: 0; }
+.multifade.animate-show.animate-show-active {
+  opacity: 1; }
+.multifade.animate-hide {
+  opacity: 1; }
+.multifade.animate-hide.animate-hide-active {
+  opacity: 0; }
+slide {
+  display: none;
+  width: 75%;
+  height: 75%;
+  margin: 3em auto;
+  border: 1px dotted black; }
+  slide .step {
+    visibility: hidden; }
+  slide.current {
+    display: block; }
+/*  Talks CSS Manifest
+ *
+
+
+
+ *
+ */

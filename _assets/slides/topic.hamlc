@@ -1,7 +1,27 @@
-%slides{type: 'plain'}
-  %slide{title: 'foo'}
+%section{title: 'my outer section'}
+  %slide{title: 'first'}
     %p some nice text here
-  %slide{title: 'foo'}
-    %p and some nice text here
-  %slide{title: 'foo'}
-    %p and and some nice text here
+    %p.step and some other text
+    %p.step and a third step
+
+  %section{title: 'my inner section'}
+    %slide{title: 'second'}
+      %p slide in section
+
+    %slide{title: 'third, but not without pleasure'}
+      %p slide in same section
+
+%slide{title: 'fourth, what the mistic river'}
+  %p some nice text here
+
+%slide{title: 'fifth, with the associated issues'}
+  %p and some nice text here
+
+%slide{title: 'sixth, but not without pleasure'}
+  %p and and some nice text here
+
+%slide{title: 'seventh, but not without pleasure'}
+  %p and some final nice text here
+
+%slide{title: 'last, some ps'}
+  %p some ps

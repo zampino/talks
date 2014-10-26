@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html ng-app="Talks"
-      ng-keydown="keyPressed($event)"
-      ng-controller="ApplicationController">
+      ng-keydown="keyPressed($event)">
   {% include head.html %}
   <body>
     <!-- {% include header.html %} -->
-    <slideframe ng-view></slideframe>
+    <div id="main"><slideframe ng-view></slideframe></div>
     {% include footer.html %}
   </body>
 </html>

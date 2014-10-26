@@ -1,26 +1,41 @@
 class SlidesController
-  @$inject = ['$location', '$rootScope', '$routeParams']
-  constructor: (@location, @root, @params)->
-    console.log 'boot slides', params
-    root.talkId = params.talkId
-    root.current = parseInt(params.slide) || @restoreState() || 0
+  @$inject = ['$rootScope', 'slides', '$location', '$routeParams']
 
-    root.keyPressed = (e)=>
-      console.log 'key pressed!'
+  constructor: (@app, @slides, @location, @params)->
+    throw 'already booted' if @booted
+    @app.state = 'loading'
+    slides.ready.then =>
+      @initialize()
+
+  initialize: ->
+    console.log 'slides ready', @slides.size()
+    @app.state = 'ready'
+    @app.talkId = @params.talkId
+    @app.talk = _.findWhere Talks.Index, id: @params.talkId
+    @app.current = @location.hash() || 0
+    @slides.current = @app.current
+    @slides.update()
+
+    # @app.$on '$routeUpdate', (e, newRoute)=>
+    #   console.log 'newroute/location', @location.hash()
+
+    @app.keyPressed = (e) =>
+      console.log 'keypressed', e.which
       reaction = @controls["key_#{e.which}"]
-      reaction.call(@) if reaction
+      reaction.call(@) if _.isFunction(reaction)
+
+    @booted = true
+
+  goToSlide: (target)->
+    return unless 0 <= target < @slides.size()
+    idx = @slides.go_to target
+    @location.hash idx
 
   controls:
-    key_37: (location)->
-      target = @root.current - 1
-      @location.path "#{@params.talkId}/#{target}"
+    key_37: ->
+      @goToSlide(@slides.current - 1)
 
-    key_39: (location)->
-      target = @root.current + 1
-      @location.path "#{@params.talkId}/#{target}"
-
-  restoreState: ->
-    storedState = store.get(@params.talkId) || {}
-    storedState.slide
+    key_39: ->
+      @goToSlide(@slides.current + 1)
 
 Talks.controller 'SlidesController', SlidesController
