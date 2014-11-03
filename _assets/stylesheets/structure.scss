@@ -1,16 +1,19 @@
 #main {
   height: 85%;
-  border: 1px solid green;
+  box-shadow: 5px 5px 3px #888;
+  padding-top: 3em;
 }
 
-footer {
-  height: 15%;
-  border: 1px solid red;
-  padding: 0 !important;
+footer.site-footer {
+  border: none;
+  padding: 0;
+  width: 75%;
+  margin: 0 auto;
+  height: 10%;
+  padding: 1em;
 
   .footer-col {
     margin-left: 1em;
-    margin-top: .5em;
-    margin-right: 2em;
+    width: 30%;
   }
 }

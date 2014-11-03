@@ -2,20 +2,20 @@ class Slides
   @$inject = ['$q']
 
   constructor: (@$q)->
-    console.log 'Slides Provider booted!'
     @store = []
+    @current = 0
     @deferred = @$q.defer()
     @ready = @deferred.promise
 
   next: ->
-    unless @store[@current].nextStep()
-      @showSlide @current + 1
-    @current
+    @current += 1 unless @store[@current].nextStep()
 
   go_to: (idx)->
     return unless (0 <= idx < @size())
-    return @next() if idx == @current + 1
-    @current = idx
+    if idx == @current + 1
+      @next()
+    else
+      @current = idx
     @update()
 
   update: ->
@@ -23,22 +23,13 @@ class Slides
     @store[@current].show()
     @current
 
-  showSlide: (idx)->
-    @store[@current].hide()
-    @current = idx
-    @store[@current].show()
-    true
-
   size: ->
     @store.length
 
   push: (slide_controls)->
-    # @store.push new Talks.Slide(idx, slide)
-    console.log 'push', slide_controls
     @store.push slide_controls
 
   done: ->
-    console.log 'done collecting'
     @deferred.resolve @
 
 Talks.service 'slides', Slides

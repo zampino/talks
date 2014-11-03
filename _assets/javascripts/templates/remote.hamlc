@@ -1,7 +1,6 @@
 #remote
-  #connection_id
-    %div{ng_model: 'connection.id', ng_editable: 'enter_id'}
-    %button{ng_click: 'connect()'} Connect!
+  #key_container
+    #key{'editable-text' => 'connection.key'} {{connection.key || 'empty'}}
   #controls
-    %button.left{'ng-click' => 'left()'}
-    %button.right{'ng-click' => 'right()'}
+    .left{'ng-click' => 'left()'}
+    .right{'ng-click' => 'right()'}

@@ -2,9 +2,8 @@ slide {
     display: none;
     width: 75%;
     height: 75%;
-    margin: 3em auto;
     border: 1px dotted black;
-
+    margin: 0 auto;
     .step {
       visibility: hidden;
     }
@@ -12,4 +11,62 @@ slide {
     &.current {
 	     display: block;
     }
+}
+
+#remote {
+  width: 100%;
+  border: 1px solid cyan;
+
+  #key_container {
+    margin: 1em;
+    border: 5px solid black;
+    padding: 2em;
+
+    form {
+      display: block;
+      width: 75%;
+      margin: 0 auto;
+
+      input {
+        height: 2em;
+        font-size: 2em;
+      }
+    }
+
+    #key {
+      width: 75%;
+      margin: 0 auto;
+      font-size: 3em;
+    }
+
+  }
+
+  #controls {
+    border: 1px dotted blue;
+    position: relative;
+
+    .left, .right {
+      position: absolute;
+      height: 10em;
+      width: 10em;
+      margin: 1em;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      border: 1px dotted magenta;
+    }
+
+    .right {
+      right: 0;
+      background-image: url('/talks/assets/right.png');
+
+    }
+
+    .left {
+      background-image: url('/talks/assets/left.png')
+    }
+
+  }
+
+
 }

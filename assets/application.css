@@ -1,15 +1,26 @@
+/*!
+angular-xeditable - 0.1.8
+Edit-in-place for angular.js
+Build date: 2014-01-10 
+*/
+
+
+.editable-wrap{display:inline-block;white-space:nowrap;margin:0}.editable-wrap .editable-controls,.editable-wrap .editable-error{margin-bottom:0}.editable-wrap .editable-controls>input,.editable-wrap .editable-controls>select,.editable-wrap .editable-controls>textarea{margin-bottom:0}.editable-wrap .editable-input{display:inline-block}.editable-buttons{display:inline-block;vertical-align:top}.editable-buttons button{margin-left:5px}.editable-input.editable-has-buttons{width:auto}.editable-bstime .editable-input input[type=text]{width:46px}.editable-bstime .well-small{margin-bottom:0;padding:10px}.editable-range output{display:inline-block;min-width:30px;vertical-align:top;text-align:center}.editable-color input[type=color]{width:50px}.editable-checkbox label span,.editable-checklist label span,.editable-radiolist label span{margin-left:7px;margin-right:10px}.editable-hide{display:none!important}.editable-click,a.editable-click{text-decoration:none;color:#428bca;border-bottom:dashed 1px #428bca}.editable-click:hover,a.editable-click:hover{text-decoration:none;color:#2a6496;border-bottom-color:#2a6496}.editable-empty,.editable-empty:hover,.editable-empty:focus,a.editable-empty,a.editable-empty:hover,a.editable-empty:focus{font-style:italic;color:#D14;text-decoration:none}
 #main {
   height: 85%;
-  border: 1px solid green; }
+  box-shadow: 5px 5px 3px #888;
+  padding-top: 3em; }
 
-footer {
-  height: 15%;
-  border: 1px solid red;
-  padding: 0 !important; }
-  footer .footer-col {
+footer.site-footer {
+  border: none;
+  padding: 0;
+  width: 75%;
+  margin: 0 auto;
+  height: 10%;
+  padding: 1em; }
+  footer.site-footer .footer-col {
     margin-left: 1em;
-    margin-top: .5em;
-    margin-right: 2em; }
+    width: 30%; }
 .multifade.animate-show, .multifade.animate-hide {
   -webkit-transition: all linear 1s;
   -moz-transition: all linear 1s;
@@ -28,16 +39,54 @@ slide {
   display: none;
   width: 75%;
   height: 75%;
-  margin: 3em auto;
-  border: 1px dotted black; }
+  border: 1px dotted black;
+  margin: 0 auto; }
   slide .step {
     visibility: hidden; }
   slide.current {
     display: block; }
+
+#remote {
+  width: 100%;
+  border: 1px solid cyan; }
+  #remote #key_container {
+    margin: 1em;
+    border: 5px solid black;
+    padding: 2em; }
+    #remote #key_container form {
+      display: block;
+      width: 75%;
+      margin: 0 auto; }
+      #remote #key_container form input {
+        height: 2em;
+        font-size: 2em; }
+    #remote #key_container #key {
+      width: 75%;
+      margin: 0 auto;
+      font-size: 3em; }
+  #remote #controls {
+    border: 1px dotted blue;
+    position: relative; }
+    #remote #controls .left, #remote #controls .right {
+      position: absolute;
+      height: 10em;
+      width: 10em;
+      margin: 1em;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border: 1px dotted magenta; }
+    #remote #controls .right {
+      right: 0;
+      background-image: url("/talks/assets/right.png"); }
+    #remote #controls .left {
+      background-image: url("/talks/assets/left.png"); }
 /*  Talks CSS Manifest
+ *
+
  *
 
 
 
  *
  */
+

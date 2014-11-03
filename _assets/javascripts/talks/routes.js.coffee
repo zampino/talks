@@ -3,16 +3,18 @@ Talks.config ['$routeProvider', '$locationProvider', ($routeProvider, $locationP
     when('/',
       controller: 'HomeController',
       template: JST['home']()).
+    when('/remote',
+      controller: 'RemoteController',
+      template: JST['remote']()).
     when('/:talkId',
       controller: 'SlidesController',
       template: (params)->
         JST[params.talkId]()
       ,
       reloadOnSearch: false).
-    when('/remote',
-      controller: 'RemoteController',
-      template: JST['remote']()).
     otherwise({template: 'not found'})
 
-  $locationProvider.html5Mode(true)
+  $locationProvider.html5Mode
+    enabled: true
+    requireBase: true
 ]

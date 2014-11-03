@@ -2,11 +2,15 @@
 plugins:
   - _prebuild
 sprockets_enabled: true
+
 assets:
   dirname: "../assets"
+  baseurl: '/talks/assets'
   cachebust: none
+  gzip: false
   sources:
     - _assets/javascripts
     - _assets/stylesheets
+    - _assets/images
 gems:
   - jekyll-assets

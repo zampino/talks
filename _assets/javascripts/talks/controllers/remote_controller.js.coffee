@@ -1,18 +1,25 @@
 class RemoteController
-  @$inject = ['$scope', '$rootScope', 'connection']
+  @$inject = ['$scope', '$rootScope', 'remoteControl']
 
-  constructor: (@scope, @app, @connection)->
+  constructor: (@scope, @app, @remote)->
+    console.log 'remote controller boot!'
+    @scope.connection =
+      key: @app.remote_key || 'enter a key'
+
+    react = (newObj)=>
+      console.log 'new key', newObj
+      @remote.connect(newObj.key)
+
+    @scope.$watch 'connection', react, true
 
     @scope.left = =>
-      @connection.left()
+      @remote.notify
+        which: 37
+        type: 'turn'
 
     @scope.right = =>
-      @connection.right()
-
-    @scope.connect = =>
-      @connection.connect_to(@scope.connection.id)
-
-
-
+      @remote.notify
+        which: 39
+        type: 'turn'
 
 Talks.controller 'RemoteController', RemoteController

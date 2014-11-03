@@ -1,7 +1,7 @@
 class SlidesController
-  @$inject = ['$rootScope', 'slides', '$location', '$routeParams']
+  @$inject = ['$rootScope', 'slides', '$location', '$routeParams', 'remoteControl', '$timeout']
 
-  constructor: (@app, @slides, @location, @params)->
+  constructor: (@app, @slides, @location, @params, @remote, @timeout)->
     throw 'already booted' if @booted
     @app.state = 'loading'
     slides.ready.then =>
@@ -9,27 +9,34 @@ class SlidesController
 
   initialize: ->
     console.log 'slides ready', @slides.size()
-    @app.state = 'ready'
     @app.talkId = @params.talkId
     @app.talk = _.findWhere Talks.Index, id: @params.talkId
-    @app.current = @location.hash() || 0
-    @slides.current = @app.current
-    @slides.update()
+    @app.slides_count = @slides.size() - 1
+    @app.current = parseInt(@location.hash()) || 0
+    @slides.go_to @app.current
+    @remote.ready (key)=>
+      @app.remote_key = key
 
-    # @app.$on '$routeUpdate', (e, newRoute)=>
-    #   console.log 'newroute/location', @location.hash()
-
-    @app.keyPressed = (e) =>
+    react = (e)=>
       console.log 'keypressed', e.which
       reaction = @controls["key_#{e.which}"]
-      reaction.call(@) if _.isFunction(reaction)
+      @timeout =>
+        reaction.call(@) if _.isFunction(reaction)
 
+    @remote.onMessage react
+    @app.keyPressed = react
+
+    @app.state = 'ready'
     @booted = true
 
   goToSlide: (target)->
     return unless 0 <= target < @slides.size()
     idx = @slides.go_to target
-    @location.hash idx
+    console.log 'going to target:', target, idx
+    @app.$apply =>
+      @app.current = idx
+      @location.hash idx
+    # @location.hash idx
 
   controls:
     key_37: ->
