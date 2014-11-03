@@ -1913,6 +1913,14 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
     }
   ]);
 
+  Talks.run([
+    '$rootScope', function(rootScope) {
+      var _env;
+      _env = angular.element("meta[name='environment']").attr('content');
+      return rootScope.env = _env;
+    }
+  ]);
+
 }).call(this);
 (function() {
   Talks.Utils = {
@@ -1925,13 +1933,13 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       }
       return color;
     },
-    randomCode: function() {
+    randomCode: function(size) {
       var i, id, len, seed, _i;
-      seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split('');
+      seed = '0123456789abcdefgh'.split('');
       len = seed.length;
-      id = "";
-      for (i = _i = 0; _i <= 14; i = ++_i) {
-        id += seed[Math.round(Math.random() * seed.length)];
+      id = '';
+      for (i = _i = 0; 0 <= size ? _i <= size : _i >= size; i = 0 <= size ? ++_i : --_i) {
+        id += seed[Math.floor(Math.random() * seed.length)];
       }
       return id;
     }
@@ -2016,15 +2024,20 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
   RemoteControl = (function() {
     angular.extend(RemoteControl.prototype, Talks.Utils);
 
-    RemoteControl.$inject = ['$http'];
+    RemoteControl.$inject = ['$http', '$rootScope'];
 
-    function RemoteControl(http) {
+    function RemoteControl(http, app) {
       this.http = http;
+      this.app = app;
+      this.handshake = __bind(this.handshake, this);
       this.open = __bind(this.open, this);
       this.errback = __bind(this.errback, this);
       this.callback = __bind(this.callback, this);
-      this.key = this.randomCode();
-      this.source_host = 'localhost:9292';
+      this.key = this.randomCode(3);
+      this.source_host = {
+        production: 'warm-hamlet-7183.herokuapp.com',
+        development: 'localhost:9292'
+      }[this.app.env];
       this.listen();
       this.listeners = [];
     }
@@ -2045,7 +2058,9 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       this.source = new EventSource(this.connection_url());
       this.source.addEventListener('message', this.callback, false);
       this.source.addEventListener('error', this.errback, false);
-      return this.source.addEventListener('open', this.open, false);
+      this.source.addEventListener('open', this.open, false);
+      this.source.addEventListener('handshake', this.handshake, false);
+      return true;
     };
 
     RemoteControl.prototype.callback = function(event, message) {
@@ -2069,6 +2084,10 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
 
     RemoteControl.prototype.open = function(event, message) {
       return console.log('[CONNECT]:', event, message);
+    };
+
+    RemoteControl.prototype.handshake = function(event) {
+      return console.log('[HANDSHAKE]:', event.data);
     };
 
     RemoteControl.prototype.connect = function(key) {

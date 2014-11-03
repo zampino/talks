@@ -5,9 +5,9 @@ Talks.Utils =
     color+= letters[Math.round(Math.random() * 15)] for i in [0..5]
     color
 
-  randomCode: ->
-    seed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split('')
+  randomCode: (size)->
+    seed = '0123456789abcdefgh'.split('')
     len = seed.length
-    id = ""
-    id += seed[Math.round(Math.random() * seed.length)] for i in [0..14]
+    id = ''
+    id += seed[Math.floor(Math.random() * seed.length)] for i in [0..size]
     id

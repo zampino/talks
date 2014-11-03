@@ -6,7 +6,7 @@ baseurl: "/talks"
 url: "https://zampino.github.io/talks"
 username: "zampino"
 twitter: "lo_zampino"
-
+environment: 'production'
 # Build settings
 markdown: kramdown
 permalink: pretty

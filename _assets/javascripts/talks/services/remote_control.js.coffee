@@ -1,10 +1,14 @@
 class RemoteControl
   angular.extend(@prototype, Talks.Utils)
-  @$inject = ['$http']
+  @$inject = ['$http', '$rootScope']
 
-  constructor: (@http)->
-    @key = @randomCode()
-    @source_host = 'localhost:9292'
+  constructor: (@http, @app)->
+    @key = @randomCode(3)
+    @source_host = {
+      production: 'warm-hamlet-7183.herokuapp.com',
+      development: 'localhost:9292'
+    }[@app.env]
+
     @listen()
     @listeners = []
 
@@ -22,6 +26,8 @@ class RemoteControl
     @source.addEventListener 'message', @callback, false
     @source.addEventListener 'error', @errback, false
     @source.addEventListener 'open', @open, false
+    @source.addEventListener 'handshake', @handshake, false
+    true
 
   callback: (event, message)=>
     _message = JSON.parse event.data
@@ -36,6 +42,9 @@ class RemoteControl
 
   open: (event, message)=>
     console.log('[CONNECT]:', event, message)
+
+  handshake: (event)=>
+    console.log '[HANDSHAKE]:', event.data
 
   # TODO: move to another service
   connect: (@key)->
