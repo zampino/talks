@@ -47,7 +47,7 @@ Vistit `/talks/remote` on an other device's browser and enter the code.
 ## Browser reloads
 If you want your talk to survive a browser reload
 simply put an empty page
-`your_talk.md` with a yaml front-matter like:
+`my_talk.md` with a yaml front-matter like:
 ```
 ---
 layout: talk
