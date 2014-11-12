@@ -1811,7 +1811,7 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
     return (function() {
       var $o;
       $o = [];
-      $o.push("<p>pick a topic</p>\n<select ng_model='talk' ng_options='t as t.name for t in talks'></select>\n<button ng_click='start()'>GO</button>\n<div class='multi-fade' ng_bind='t.description' ng_repeat='t in talks' ng_show='t.id==talk.id' ng_animate=\"{show:'animate-show', hide:'animate-hide'}\"></div>");
+      $o.push("<div id='home'>\n  <select ng_model='talk' ng_options='t as t.name for t in talks'></select>\n  <button class='button' ng_click='start()'>GO</button>\n  <div class='multi-fade' ng_bind='t.description' ng_repeat='t in talks' ng_show='t.id==talk.id' ng_animate=\"{show:'animate-show', hide:'animate-hide'}\"></div>\n</div>");
       return $o.join("\n").replace(/\s(?:id|class)=(['"])(\1)/mg, "");
     }).call(window.HAML.context(context));
   };
@@ -1827,6 +1827,21 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       var $o;
       $o = [];
       $o.push("<div id='remote'>\n  <div id='key_container'>\n    <div id='key' editable-text='connection.key'>{{connection.key || 'empty'}}</div>\n  </div>\n  <div id='controls'>\n    <div class='left' ng-click='left()'></div>\n    <div class='right' ng-click='right()'></div>\n  </div>\n</div>");
+      return $o.join("\n").replace(/\s(?:id|class)=(['"])(\1)/mg, "");
+    }).call(window.HAML.context(context));
+  };
+
+}).call(this);
+(function() {
+  if (window.JST == null) {
+    window.JST = {};
+  }
+
+  window.JST['aggregations'] = function(context) {
+    return (function() {
+      var $o;
+      $o = [];
+      $o.push("<slide class='title'>\n  <h1>MongoDB hierarchical aggregations</h1>\n</slide>\n<slide class='title'>\n  <h1>Record -> BaseCollection -></h1>\n  <h1>Daily -> Weekly -> Monthly</h1>\n</slide>\n<slide>\n  <code data-gist-id='e6982a8091d2ce02075d' data-gist-file='record.rb'></code>\n</slide>\n<slide>\n  <code data-gist-id='e6982a8091d2ce02075d' data-gist-file='task.rb'></code>\n</slide>\n<slide>\n  <code data-gist-id='e6982a8091d2ce02075d' data-gist-file='base_collection.rb'></code>\n</slide>\n<slide>\n  <code data-gist-id='e6982a8091d2ce02075d' data-gist-file='daily.rb'></code>\n</slide>\n<slide>\n  <code data-gist-id='e6982a8091d2ce02075d' data-gist-file='weekly.rb'></code>\n</slide>\n<slide>\n  <h2>Extra requirements</h2>\n  <ul>\n    <li>\n      <b>idempotent</b>\n    </li>\n    <li>\n      <b>incremental</b>\n    </li>\n  </ul>\n  <code data-gist-id='e6982a8091d2ce02075d' data-gist-file='finalize.rb'></code>\n</slide>\n<slide>\n  <h2>Resources</h2>\n  <p><a href=\"http://docs.mongodb.org/ecosystem/use-cases/hierarchical-aggregation\">docs.mongodb.org/ecosystem/use-cases/hierarchical-aggregation</a></p>\n  <p><a href=\"http://docs.mongodb.org/manual/applications/aggregation\">docs.mongodb.org/manual/applications/aggregation</a></p>\n  <p><a href=\"docs.mongodb.org/master/MongoDB-aggregation-guide.pdf\">docs.mongodb.org/master/MongoDB-aggregation-guide.pdf</a></p>\n</slide>");
       return $o.join("\n").replace(/\s(?:id|class)=(['"])(\1)/mg, "");
     }).call(window.HAML.context(context));
   };
@@ -1958,6 +1973,11 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       title: 'other title',
       name: 'other name',
       description: 'some description'
+    }, {
+      id: 'aggregations',
+      title: 'MongoDB hierarchical aggregations',
+      name: 'MongoDB hierarchical aggregations',
+      description: 'build multi-scale time-based statistic and aggregations with MongoDB map-reduce funcionality'
     }
   ];
 

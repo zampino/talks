@@ -1,0 +1,41 @@
+%slide.title
+  %h1 MongoDB hierarchical aggregations
+
+%slide.title
+  %h1 Record -> BaseCollection ->
+  %h1 Daily -> Weekly -> Monthly
+
+%slide
+  %code{'data-gist-id' => 'e6982a8091d2ce02075d',
+        'data-gist-file' => 'record.rb'}
+
+%slide
+  %code{'data-gist-id' => 'e6982a8091d2ce02075d',
+        'data-gist-file' => 'task.rb'}
+%slide
+  %code{'data-gist-id' => 'e6982a8091d2ce02075d',
+        'data-gist-file' => 'base_collection.rb'}
+
+%slide
+  %code{'data-gist-id' => 'e6982a8091d2ce02075d',
+        'data-gist-file' => 'daily.rb'}
+
+%slide
+  %code{'data-gist-id' => 'e6982a8091d2ce02075d',
+        'data-gist-file' => 'weekly.rb'}
+
+%slide
+  %h2 Extra requirements
+  %ul
+    %li
+      %b idempotent
+    %li
+      %b incremental
+  %code{'data-gist-id' => 'e6982a8091d2ce02075d',
+        'data-gist-file' => 'finalize.rb'}
+
+%slide
+  %h2 Resources
+  %p <a href="http://docs.mongodb.org/ecosystem/use-cases/hierarchical-aggregation">docs.mongodb.org/ecosystem/use-cases/hierarchical-aggregation</a>
+  %p <a href="http://docs.mongodb.org/manual/applications/aggregation">docs.mongodb.org/manual/applications/aggregation</a>
+  %p <a href="docs.mongodb.org/master/MongoDB-aggregation-guide.pdf">docs.mongodb.org/master/MongoDB-aggregation-guide.pdf</a>

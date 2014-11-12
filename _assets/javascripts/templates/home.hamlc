@@ -1,4 +1,4 @@
-%p pick a topic
-%select{ng_model:"talk", ng_options: "t as t.name for t in talks"}
-%button{ng_click: "start()"} GO
-.multi-fade{ng_bind: "t.description", ng_repeat: 't in talks', ng_show: "t.id==talk.id", ng_animate: "{show:'animate-show', hide:'animate-hide'}" }
+#home
+  %select{ng_model:"talk", ng_options: "t as t.name for t in talks"}
+  %button.button{ng_click: "start()"} GO
+  .multi-fade{ng_bind: "t.description", ng_repeat: 't in talks', ng_show: "t.id==talk.id", ng_animate: "{show:'animate-show', hide:'animate-hide'}" }

@@ -1,0 +1,57 @@
+#remote {
+  width: 100%;
+
+  #key_container {
+    margin: 1em;
+    border: 5px solid black;
+    padding: 2em;
+
+    form {
+      display: block;
+      width: 75%;
+      margin: 0 auto;
+
+      input {
+        height: 2em;
+        font-size: 2em;
+      }
+    }
+
+    #key {
+      width: 75%;
+      margin: 0 auto;
+      font-size: 3em;
+    }
+
+  }
+
+  #controls {
+    position: relative;
+
+    .left, .right {
+      position: absolute;
+      height: 10em;
+      width: 10em;
+      margin: 1em;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      &:active {
+        box-shadow: 5px 5px 3px #CCC;
+      }
+    }
+
+    .right {
+      right: 0;
+      background-image: url('/talks/assets/right.png');
+
+    }
+
+    .left {
+      background-image: url('/talks/assets/left.png')
+    }
+
+  }
+
+
+}

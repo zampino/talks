@@ -35,20 +35,37 @@ footer.site-footer {
   opacity: 1; }
 .multifade.animate-hide.animate-hide-active {
   opacity: 0; }
+#home {
+  width: 50%;
+  margin: auto auto;
+  text-align: center; }
+  #home select {
+    width: 100%; }
+  #home button {
+    width: 100%;
+    margin-bottom: 5em; }
 slide {
   display: none;
   width: 75%;
   height: 75%;
-  border: 1px dotted black;
   margin: 0 auto; }
   slide .step {
     visibility: hidden; }
   slide.current {
     display: block; }
-
+  slide.center {
+    text-align: center; }
+  slide.title {
+    margin-top: 10%;
+    text-align: center; }
+    slide.title h1 {
+      font-size: 300%; }
+  slide h1, slide h2 {
+    margin-bottom: 2em; }
+  slide li {
+    margin-bottom: 2em; }
 #remote {
-  width: 100%;
-  border: 1px solid cyan; }
+  width: 100%; }
   #remote #key_container {
     margin: 1em;
     border: 5px solid black;
@@ -65,7 +82,6 @@ slide {
       margin: 0 auto;
       font-size: 3em; }
   #remote #controls {
-    border: 1px dotted blue;
     position: relative; }
     #remote #controls .left, #remote #controls .right {
       position: absolute;
@@ -73,8 +89,9 @@ slide {
       width: 10em;
       margin: 1em;
       background-repeat: no-repeat;
-      background-size: cover;
-      border: 1px dotted magenta; }
+      background-size: cover; }
+      #remote #controls .left:active, #remote #controls .right:active {
+        box-shadow: 5px 5px 3px #CCC; }
     #remote #controls .right {
       right: 0;
       background-image: url("/talks/assets/right.png"); }
@@ -84,6 +101,8 @@ slide {
  *
 
  *
+
+
 
 
 

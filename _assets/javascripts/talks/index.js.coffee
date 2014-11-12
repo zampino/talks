@@ -8,4 +8,9 @@ Talks.Index = [{
   title: 'other title',
   name: 'other name',
   description: 'some description'
+}, {
+  id: 'aggregations',
+  title: 'MongoDB hierarchical aggregations',
+  name: 'MongoDB hierarchical aggregations',
+  description: 'build multi-scale time-based statistic and aggregations with MongoDB map-reduce funcionality'
 }]

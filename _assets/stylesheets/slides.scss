@@ -1,72 +1,29 @@
 slide {
-    display: none;
-    width: 75%;
-    height: 75%;
-    border: 1px dotted black;
-    margin: 0 auto;
-    .step {
-      visibility: hidden;
-    }
-
-    &.current {
-	     display: block;
-    }
-}
-
-#remote {
-  width: 100%;
-  border: 1px solid cyan;
-
-  #key_container {
-    margin: 1em;
-    border: 5px solid black;
-    padding: 2em;
-
-    form {
-      display: block;
-      width: 75%;
-      margin: 0 auto;
-
-      input {
-        height: 2em;
-        font-size: 2em;
-      }
-    }
-
-    #key {
-      width: 75%;
-      margin: 0 auto;
-      font-size: 3em;
-    }
-
+  display: none;
+  width: 75%;
+  height: 75%;
+  //border: 1px dotted black;
+  margin: 0 auto;
+  .step {
+    visibility: hidden;
   }
-
-  #controls {
-    border: 1px dotted blue;
-    position: relative;
-
-    .left, .right {
-      position: absolute;
-      height: 10em;
-      width: 10em;
-      margin: 1em;
-      background-repeat: no-repeat;
-      background-size: cover;
-
-      border: 1px dotted magenta;
-    }
-
-    .right {
-      right: 0;
-      background-image: url('/talks/assets/right.png');
-
-    }
-
-    .left {
-      background-image: url('/talks/assets/left.png')
-    }
-
+  &.current {
+     display: block;
   }
-
-
+  &.center {
+    text-align: center;
+  }
+  &.title {
+    margin-top: 10%;
+    text-align: center;
+    h1 {
+      font-size: 300%;
+    }
+  }
+  h1, h2 {
+    margin-bottom: 2em;
+  }
+  li {
+    margin-bottom: 2em;
+  }
 }
