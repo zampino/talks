@@ -1977,7 +1977,7 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       id: 'aggregations',
       title: 'MongoDB hierarchical aggregations',
       name: 'MongoDB hierarchical aggregations',
-      description: 'build multi-scale time-based statistic and aggregations with MongoDB map-reduce funcionality'
+      description: 'build multi-scale time-based aggregations with MongoDB map-reduce'
     }
   ];
 
