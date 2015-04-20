@@ -1,14 +1,16 @@
 class RemoteController
-  @$inject = ['$scope', '$rootScope', 'remoteControl']
+  @$inject = ['$scope', '$rootScope', 'remoteControl', '$location']
 
-  constructor: (@scope, @app, @remote)->
+  constructor: (@scope, @app, @remote, @location)->
     console.log 'remote controller boot!'
+    key = @location.hash() || @app.remote_key || 'enter a key'
     @scope.connection =
-      key: @app.remote_key || 'enter a key'
+      key: key
+    @remote.set_key key
 
     react = (newObj)=>
       console.log 'new key', newObj
-      @remote.connect(newObj.key)
+      @remote.set_key newObj.key
 
     @scope.$watch 'connection', react, true
 

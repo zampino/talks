@@ -1,24 +1,28 @@
 class RemoteControl
   angular.extend(@prototype, Talks.Utils)
-  @$inject = ['$http', '$rootScope']
+  @$inject = ['$http', '$rootScope', '$window']
 
-  constructor: (@http, @app)->
+  constructor: (@http, @app, _window)->
     @key = @randomCode(3)
     @source_host = {
-      production: 'warm-hamlet-7183.herokuapp.com',
-      development: 'localhost:9292'
+      production: 'plugrc.herokuapp.com',
+      development: 'localhost:4000'
     }[@app.env]
-
-    @listen()
     @listeners = []
+    # angular.element(_window).on "beforeunload", @exit
+    window.__rc = @
+
+  set_key: (key)->
+    @key = key
 
   ready: (callback)->
+    @listen()
     callback(@key)
 
   onMessage: (callback)->
     @listeners.push callback
 
-  connection_url: ->
+  connection_url: ()->
     "//#{@source_host}/connections/#{@key}"
 
   listen: ->
@@ -29,25 +33,29 @@ class RemoteControl
     @source.addEventListener 'handshake', @handshake, false
     true
 
-  callback: (event, message)=>
+  close_connection: ->
+    console.log "closing connection!"
+    @source.close()
+
+  callback: (event)=>
     _message = JSON.parse event.data
     console.log '[INFO]:', _message
     return if _.isEmpty(@listeners)
     callback(_message) for callback in @listeners
     true
 
-  errback: (event, message)=>
-    console.log('[ERROR]:', event, message)
-    # @source.close()
+  errback: (event)=>
+    console.log('[ERROR]:', event)
 
-  open: (event, message)=>
-    console.log('[CONNECT]:', event, message)
+  exit: (event)=>
+    console.log '[UNLOAD]'
+    @source.close()
+
+  open: (event)=>
+    console.log('[CONNECT]:', event)
 
   handshake: (event)=>
     console.log '[HANDSHAKE]:', event.data
-
-  # TODO: move to another service
-  connect: (@key)->
 
   notify: (message)->
     resp = @http.post @connection_url(), message

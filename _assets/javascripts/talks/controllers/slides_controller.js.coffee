@@ -1,7 +1,7 @@
 class SlidesController
-  @$inject = ['$rootScope', 'slides', '$location', '$routeParams', 'remoteControl', '$timeout']
+  @$inject = ['$rootScope', 'slides', '$location', '$routeParams', 'remoteControl', '$timeout', '$window']
 
-  constructor: (@app, @slides, @location, @params, @remote, @timeout)->
+  constructor: (@app, @slides, @location, @params, @remote, @timeout, @w)->
     throw 'already booted' if @booted
     @app.state = 'loading'
     slides.ready.then =>
@@ -16,6 +16,9 @@ class SlidesController
     @slides.go_to @app.current
     @remote.ready (key)=>
       @app.remote_key = key
+      @app.goToRemote = ()=>
+        @w.open "/talks/remote##{key}", "_blank"
+
 
     react = (e)=>
       console.log 'keypressed', e.which

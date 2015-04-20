@@ -2044,25 +2044,31 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
   RemoteControl = (function() {
     angular.extend(RemoteControl.prototype, Talks.Utils);
 
-    RemoteControl.$inject = ['$http', '$rootScope'];
+    RemoteControl.$inject = ['$http', '$rootScope', '$window'];
 
-    function RemoteControl(http, app) {
+    function RemoteControl(http, app, _window) {
       this.http = http;
       this.app = app;
       this.handshake = __bind(this.handshake, this);
       this.open = __bind(this.open, this);
+      this.exit = __bind(this.exit, this);
       this.errback = __bind(this.errback, this);
       this.callback = __bind(this.callback, this);
       this.key = this.randomCode(3);
       this.source_host = {
-        production: 'warm-hamlet-7183.herokuapp.com',
-        development: 'localhost:9292'
+        production: 'plugrc.herokuapp.com',
+        development: 'localhost:4000'
       }[this.app.env];
-      this.listen();
       this.listeners = [];
+      window.__rc = this;
     }
 
+    RemoteControl.prototype.set_key = function(key) {
+      return this.key = key;
+    };
+
     RemoteControl.prototype.ready = function(callback) {
+      this.listen();
       return callback(this.key);
     };
 
@@ -2083,7 +2089,12 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       return true;
     };
 
-    RemoteControl.prototype.callback = function(event, message) {
+    RemoteControl.prototype.close_connection = function() {
+      console.log("closing connection!");
+      return this.source.close();
+    };
+
+    RemoteControl.prototype.callback = function(event) {
       var callback, _i, _len, _message, _ref;
       _message = JSON.parse(event.data);
       console.log('[INFO]:', _message);
@@ -2098,20 +2109,21 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       return true;
     };
 
-    RemoteControl.prototype.errback = function(event, message) {
-      return console.log('[ERROR]:', event, message);
+    RemoteControl.prototype.errback = function(event) {
+      return console.log('[ERROR]:', event);
     };
 
-    RemoteControl.prototype.open = function(event, message) {
-      return console.log('[CONNECT]:', event, message);
+    RemoteControl.prototype.exit = function(event) {
+      console.log('[UNLOAD]');
+      return this.source.close();
+    };
+
+    RemoteControl.prototype.open = function(event) {
+      return console.log('[CONNECT]:', event);
     };
 
     RemoteControl.prototype.handshake = function(event) {
       return console.log('[HANDSHAKE]:', event.data);
-    };
-
-    RemoteControl.prototype.connect = function(key) {
-      this.key = key;
     };
 
     RemoteControl.prototype.notify = function(message) {
@@ -2226,21 +2238,24 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
   var RemoteController;
 
   RemoteController = (function() {
-    RemoteController.$inject = ['$scope', '$rootScope', 'remoteControl'];
+    RemoteController.$inject = ['$scope', '$rootScope', 'remoteControl', '$location'];
 
-    function RemoteController(scope, app, remote) {
-      var react;
+    function RemoteController(scope, app, remote, location) {
+      var key, react;
       this.scope = scope;
       this.app = app;
       this.remote = remote;
+      this.location = location;
       console.log('remote controller boot!');
+      key = this.location.hash() || this.app.remote_key || 'enter a key';
       this.scope.connection = {
-        key: this.app.remote_key || 'enter a key'
+        key: key
       };
+      this.remote.set_key(key);
       react = (function(_this) {
         return function(newObj) {
           console.log('new key', newObj);
-          return _this.remote.connect(newObj.key);
+          return _this.remote.set_key(newObj.key);
         };
       })(this);
       this.scope.$watch('connection', react, true);
@@ -2273,15 +2288,16 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
   var SlidesController;
 
   SlidesController = (function() {
-    SlidesController.$inject = ['$rootScope', 'slides', '$location', '$routeParams', 'remoteControl', '$timeout'];
+    SlidesController.$inject = ['$rootScope', 'slides', '$location', '$routeParams', 'remoteControl', '$timeout', '$window'];
 
-    function SlidesController(app, slides, location, params, remote, timeout) {
+    function SlidesController(app, slides, location, params, remote, timeout, w) {
       this.app = app;
       this.slides = slides;
       this.location = location;
       this.params = params;
       this.remote = remote;
       this.timeout = timeout;
+      this.w = w;
       if (this.booted) {
         throw 'already booted';
       }
@@ -2305,7 +2321,10 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       this.slides.go_to(this.app.current);
       this.remote.ready((function(_this) {
         return function(key) {
-          return _this.app.remote_key = key;
+          _this.app.remote_key = key;
+          return _this.app.goToRemote = function() {
+            return _this.w.open("/talks/remote#" + key, "_blank");
+          };
         };
       })(this));
       react = (function(_this) {

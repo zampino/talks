@@ -3,9 +3,11 @@ Talks.config ['$routeProvider', '$locationProvider', ($routeProvider, $locationP
     when('/',
       controller: 'HomeController',
       template: JST['home']()).
+
     when('/remote',
       controller: 'RemoteController',
       template: JST['remote']()).
+
     when('/:talkId',
       controller: 'SlidesController',
       template: (params)->

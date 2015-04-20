@@ -18,7 +18,7 @@
   </ul></div>
   <div class="footer-col column">
     <ul>
-      <li toggle-remote-key><a href="remote">remote: </a><span ng-bind="remote_key"></span></li>
+      <li toggle-remote-key><a ng-click="goToRemote()">remote: </a>{{remote_key}}<span ng-bind="remote_key"></span></li>
       <li>env:<span ng-bind="env"></span></li>
     </ul>
   </div>
