@@ -4,7 +4,7 @@ class SlidesController
   constructor: (@app, @slides, @location, @params, @remote, @timeout, @w)->
     throw 'already booted' if @booted
     @app.state = 'loading'
-    slides.ready.then =>
+    @slides.ready.then =>
       @initialize()
 
   initialize: ->
@@ -16,10 +16,8 @@ class SlidesController
     @slides.go_to @app.current
     @remote.ready (key)=>
       @app.remote_key = key
-      @app.goToRemote = ()=>
-        @w.open "/talks/remote##{key}", "_blank"
-
-
+      # @app.goToRemote = ()=>
+      #   @w.open "/talks/remote##{key}", "_blank"
     react = (e)=>
       console.log 'keypressed', e.which
       reaction = @controls["key_#{e.which}"]
@@ -39,7 +37,6 @@ class SlidesController
     @app.$apply =>
       @app.current = idx
       @location.hash idx
-    # @location.hash idx
 
   controls:
     key_37: ->
