@@ -3,7 +3,6 @@ class RemoteControl
   @$inject = ['$http', '$rootScope', '$window']
 
   constructor: (@http, @app, _window)->
-    @key = @randomCode(3)
     @source_host = {
       production: 'plugrc.herokuapp.com',
       development: 'localhost:4000'
@@ -16,21 +15,20 @@ class RemoteControl
     @key = key
 
   ready: (callback)->
-    @listen()
-    callback(@key)
+    @listen(callback)
 
   onMessage: (callback)->
     @listeners.push callback
 
   connection_url: ()->
-    "//#{@source_host}/connections/#{@key}"
+    "//#{@source_host}/remote"
 
-  listen: ->
+  listen: (callback)->
     @source = new EventSource(@connection_url())
     @source.addEventListener 'message', @callback, false
     @source.addEventListener 'error', @errback, false
     @source.addEventListener 'open', @open, false
-    @source.addEventListener 'handshake', @handshake, false
+    @source.addEventListener 'handshake', @handshake(callback), false
     true
 
   close_connection: ->
@@ -54,8 +52,12 @@ class RemoteControl
   open: (event)=>
     console.log('[CONNECT]:', event)
 
-  handshake: (event)=>
-    console.log '[HANDSHAKE]:', event.data
+  handshake: (callback)->
+    handshake_callback = (event)->
+      message = JSON.parse event.data
+      console.log '[HANDSHAKE]: ', event.data
+      callback(message.connection_id)
+    handshake_callback
 
   notify: (message)->
     resp = @http.post @connection_url(), message

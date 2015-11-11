@@ -64,6 +64,8 @@ slide {
     margin-bottom: 2em; }
   slide li {
     margin-bottom: 2em; }
+  slide p {
+    margin-bottom: 2em; }
 #remote {
   width: 100%; }
   #remote #key_container {

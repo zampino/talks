@@ -1,28 +1,39 @@
 %slide.title
   %h2 Pastelli
-  %p.center she comes in colors
+  %h3 An Elixir Plug adapter for Elli webserver
+  %em.center she comes in colors
   %hr
   %h3 Andrea Amantini
-  %p.center "gh: zampino"
-  %p.center "tw: lo_zampino"
+  %p.center gh: zampino
+  %p.center tw: lo_zampino
 
 %slide
   %h3 Summary
-  %ul
-    %li why Elli?
-    %li "chunk loop / EventSource / active vs. passive socket"
-    %li Ruby Sinatra Thin
-    %li remote control
-    %li "some more examples / Elm"
-
-
-
-
+  %hr
+  %p
+    %ul
+      %li why Elli?
+      %li chunk loop - EventSource - active vs. passive socket
+      %li Ruby Sinatra Thin
+      %li remote control
+      %li some more examples - Elm
 
 %slide
-  - # %a(href="https://github.com/zampino/remote_control/blob/base/remote_control.rb" target="_blank")
+  %p
+    %a{href: "https://github.com/elixir-lang/plug#plug", target: "_blank"}
+      Plug
+    Adapter Options?
+  %p
+    %code.elixir
+      Plug.Adapters.Cowboy.http MyPlug, [port: 4000]
+  %p
+    %code.elixir
+      Pastelli.Adapter.http MyPlug, [port: 4000]
+
+%slide
+  %a{href: "https://github.com/zampino/remote_control/blob/base/remote_control.rb#L29-L43", target: "_blank"}
   %h3 Ruby Sinatra Thin
 
 %slide
- %p
-  %a(hrer='http://github.com/elixir-lang/issues/221' target='_blank') closing connections issues
+  %p
+    %a{href: 'http://github.com/elixir-lang/issues/221', target: '_blank'} closing connections issues

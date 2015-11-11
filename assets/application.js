@@ -1826,7 +1826,7 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
     return (function() {
       var $o;
       $o = [];
-      $o.push("<slide class='title'>\n  <h2>Pastelli</h2>\n  <hr>\n  <p class='center'>she comes in colors</p>\n</slide>\n<slide>\n  <h3>Summary</h3>\n  <ul>\n    <li>some slides</li>\n    <li>with a remote control</li>\n    <li>\n      <a href='https://github.com/zampino/remote_control/blob/base/remote_control.rb' target='_blank'>ruby sinatra thin</a>\n    </li>\n    <li>an Elixir rewrite</li>\n    <li>\n      <a href='http://github.com/elixir-lang/issues/221' target='_blank'>closing connections issues</a>\n    </li>\n    <li>a plug adapter</li>\n  </ul>\n</slide>");
+      $o.push("<slide class='title'>\n  <h2>Pastelli</h2>\n  <h3>An Elixir Plug adapter for Elli webserver</h3>\n  <em class='center'>she comes in colors</em>\n  <hr>\n  <h3>Andrea Amantini</h3>\n  <p class='center'>gh: zampino</p>\n  <p class='center'>tw: lo_zampino</p>\n</slide>\n<slide>\n  <h3>Summary</h3>\n  <hr>\n  <p>\n    <ul>\n      <li>why Elli?</li>\n      <li>chunk loop - EventSource - active vs. passive socket</li>\n      <li>Ruby Sinatra Thin</li>\n      <li>remote control</li>\n      <li>some more examples - Elm</li>\n    </ul>\n  </p>\n</slide>\n<slide>\n  <p>\n    <a href='https://github.com/elixir-lang/plug#plug' target='_blank'>\n      Plug\n    </a>\n    Adapter Options?\n  </p>\n  <p>\n    <code class='elixir'>\n      Plug.Adapters.Cowboy.http MyPlug, [port: 4000]\n    </code>\n  </p>\n  <p>\n    <code class='elixir'>\n      Pastelli.Adapter.http MyPlug, [port: 4000]\n    </code>\n  </p>\n</slide>\n<slide>\n  <a href='https://github.com/zampino/remote_control/blob/base/remote_control.rb#L29-L43' target='_blank'></a>\n  <h3>Ruby Sinatra Thin</h3>\n</slide>\n<slide>\n  <p>\n    <a href='http://github.com/elixir-lang/issues/221' target='_blank'>closing connections issues</a>\n  </p>\n</slide>");
       return $o.join("\n").replace(/\s(?:id|class)=(['"])(\1)/mg, "");
     }).call(window.HAML.context(context));
   };
@@ -2024,12 +2024,10 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
     function RemoteControl(http, app, _window) {
       this.http = http;
       this.app = app;
-      this.handshake = bind(this.handshake, this);
       this.open = bind(this.open, this);
       this.exit = bind(this.exit, this);
       this.errback = bind(this.errback, this);
       this.callback = bind(this.callback, this);
-      this.key = this.randomCode(3);
       this.source_host = {
         production: 'plugrc.herokuapp.com',
         development: 'localhost:4000'
@@ -2043,8 +2041,7 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
     };
 
     RemoteControl.prototype.ready = function(callback) {
-      this.listen();
-      return callback(this.key);
+      return this.listen(callback);
     };
 
     RemoteControl.prototype.onMessage = function(callback) {
@@ -2052,15 +2049,15 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
     };
 
     RemoteControl.prototype.connection_url = function() {
-      return "//" + this.source_host + "/connections/" + this.key;
+      return "//" + this.source_host + "/remote";
     };
 
-    RemoteControl.prototype.listen = function() {
+    RemoteControl.prototype.listen = function(callback) {
       this.source = new EventSource(this.connection_url());
       this.source.addEventListener('message', this.callback, false);
       this.source.addEventListener('error', this.errback, false);
       this.source.addEventListener('open', this.open, false);
-      this.source.addEventListener('handshake', this.handshake, false);
+      this.source.addEventListener('handshake', this.handshake(callback), false);
       return true;
     };
 
@@ -2097,8 +2094,15 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       return console.log('[CONNECT]:', event);
     };
 
-    RemoteControl.prototype.handshake = function(event) {
-      return console.log('[HANDSHAKE]:', event.data);
+    RemoteControl.prototype.handshake = function(callback) {
+      var handshake_callback;
+      handshake_callback = function(event) {
+        var message;
+        message = JSON.parse(event.data);
+        console.log('[HANDSHAKE]: ', event.data);
+        return callback(message.connection_id);
+      };
+      return handshake_callback;
     };
 
     RemoteControl.prototype.notify = function(message) {
@@ -2296,10 +2300,7 @@ angular.module("xeditable",[]).value("editableOptions",{theme:"default",buttons:
       this.slides.go_to(this.app.current);
       this.remote.ready((function(_this) {
         return function(key) {
-          _this.app.remote_key = key;
-          return _this.app.goToRemote = function() {
-            return _this.w.open("/talks/remote#" + key, "_blank");
-          };
+          return _this.app.remote_key = key;
         };
       })(this));
       react = (function(_this) {

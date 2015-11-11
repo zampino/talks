@@ -16,8 +16,6 @@ class SlidesController
     @slides.go_to @app.current
     @remote.ready (key)=>
       @app.remote_key = key
-      # @app.goToRemote = ()=>
-      #   @w.open "/talks/remote##{key}", "_blank"
     react = (e)=>
       console.log 'keypressed', e.which
       reaction = @controls["key_#{e.which}"]
