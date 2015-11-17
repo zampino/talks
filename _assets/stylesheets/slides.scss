@@ -2,7 +2,6 @@ slide {
   display: none;
   width: 75%;
   height: 75%;
-  //border: 1px dotted black;
   margin: 0 auto;
   .step {
     visibility: hidden;
@@ -27,6 +26,7 @@ slide {
     margin-bottom: 2em;
   }
   p {
-    margin-bottom: 2em;
+    font-size: 2em;
+    margin-bottom: 1em;
   }
 }

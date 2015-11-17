@@ -4,36 +4,91 @@
   %em.center she comes in colors
   %hr
   %h3 Andrea Amantini
-  %p.center gh: zampino
-  %p.center tw: lo_zampino
+  %h5.center gh: zampino
+  %h5.center tw: lo_zampino
 
 %slide
-  %h3 Summary
+  %h2 Summary
+  %hr
+  %ul
+    %li
+      %p why Elli?
+    %li
+      %p chunk loop - EventSource - active vs. passive socket
+    %li
+      %p comparing Ruby Sinatra Thin stack
+    %li
+      %p Event Streams in action: an abstract remote controller
+
+%slide
+  %h2
+    %a{href: "//github.com/elixir-lang/plug#hello-world", target: "_blank"}
+      Plug
+  %hr
+  %p Routing and Composition
+  %p "pipelined" Middleware
+  %p Connection Struct
+  %pre
+    %code.ruby
+      &#37;Plug.Conn{host: "localhost", port: 4000,
+      &nbsp;&nbsp;path_info: ["foo", "bar"]..., assigns: &#37;{ ... }, }
+  %p Server Adapter
+
+%slide
+  %h2 Server Sent Events with Cowboy adapter
+  %p Connection state: 'chunked' + side-effect messaging
+  %p
+    %a{href: 'http://github.com/elixir-lang/plug/issues/228', target: '_blank'} connection issues
+  %p
+    routing chunked connections
+    %a{href: "//github.com/zampino/pac_plug/blob/master/lib/pac_plug/router.ex#L22", target: "_blank"} [1]
+    %a{href: "//enigmatic-cove-7218.herokuapp.com/"} [2]
+
+%slide
+  %h2
+    %a{href: "//github.com/knutin/elli#features", target: "blank"} Elli
   %hr
   %p
-    %ul
-      %li why Elli?
-      %li chunk loop - EventSource - active vs. passive socket
-      %li Ruby Sinatra Thin
-      %li remote control
-      %li some more examples - Elm
+    Simple, robust and performant Erlang web server, Elli
+    is a aimed exclusively at building high-throughput, low-latency HTTP APIs ...
 
 %slide
+  %h2
+    %a{href: "//github.com/zampino/pastelli#usage", target: "blank"}
+      Pastelli
+  %hr
   %p
-    %a{href: "https://github.com/elixir-lang/plug#plug", target: "_blank"}
-      Plug
-    Adapter Options?
+    %a{href: "//github.com/zampino/pastelli/blob/master/lib/pastelli/handler.ex#L1", target: "blabk"} Pastelli Handler
+    changes chunked response semantic
+  %p Handles chunked connection closed by client
   %p
-    %code.elixir
-      Plug.Adapters.Cowboy.http MyPlug, [port: 4000]
+    delegates websockets via handover to
+    %em elli_websocket
   %p
-    %code.elixir
-      Pastelli.Adapter.http MyPlug, [port: 4000]
+    extends
+    %code Plug.Conn
+    struct functions
+
+%slide
+  %h2 EventSource
+  %hr
+  %pre
+    %code.javascript
+      es = new EventSource("//stream/url")
+      es.addEventListener "foo", (e)->
+      &nbsp;&nbsp;console.log e.type, e.data
+      \n
+      es.addEventListener "open", onOpen
+      es.addEventListener "error", onClose
+
+  %pre
+    event: foo\nretry: 6000\nid: a7s6df5\ndata: {\"foo\":\"bar\"}
+  %pre
+    event: bla\ndata: {\"foo\":\"bar\"}
+
+%slide
+  %h2 "Abstract" remote Controller
 
 %slide
   %a{href: "https://github.com/zampino/remote_control/blob/base/remote_control.rb#L29-L43", target: "_blank"}
-  %h3 Ruby Sinatra Thin
-
-%slide
-  %p
-    %a{href: 'http://github.com/elixir-lang/issues/221', target: '_blank'} closing connections issues
+    %h3 Ruby Sinatra Thin
