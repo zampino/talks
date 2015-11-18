@@ -65,15 +65,18 @@
       Pastelli
   %hr
   %p
-    %a{href: "//github.com/zampino/pastelli/blob/master/lib/pastelli/handler.ex#L1", target: "blabk"} Pastelli Handler
     changes chunked response semantic
-  %p handles chunked connection closed by client
+    %a{href: "//github.com/zampino/pastelli/blob/master/lib/pastelli/handler.ex#L1"}
+      [1]
+    %a{href: "//github.com/zampino/pastelli/blob/master/lib/pastelli/connection.ex#L1"}
+      [2]
+  %p handles connection closed by eventsource client
   %p
     delegates websockets via handover to
     %em elli_websocket
   %p
     extends Plug.Conn and Plug.Router
-    %a{href: "//localhost:3000/talsk/pastelli"} [1]
+    %a{href: "//localhost:3000/talks/pastelli/"} [1]
     %a{href: "//localhost:4000/index.html"} [2]
     %a{href: "//zampino.github.io/talks/pastelli"} [3]
     %a{href: "//plugrc.herokuapp.com/index.html"} [4]
